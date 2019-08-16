@@ -1,0 +1,83 @@
+{% extends 'dashboard.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Product Details</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="">
+            <a href="{% url 'products:product-photos' product.album.slug %}" class="btn navy-bg whitish-fg rounded-pill"><i class="fa fa-plus"></i> Image</a>
+            <a href="{% url 'vendors:vendor-products' request.user.vendor.slug %}" class="btn navy-bg text-white rounded-pill"><i class="fas fa-list-ol"></i> Back to list</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Preview</a>
+            <a class="nav-link" id="v-pills-edit-tab" data-toggle="pill" href="#v-pills-edit" role="tab" aria-controls="v-pills-edit" aria-selected="false">Edit</a>
+            <a class="nav-link" id="v-pills-category-tab" data-toggle="pill" href="#v-pills-category" role="tab" aria-controls="v-pills-category" aria-selected="false">Category</a>
+        </div>
+    </div>
+    <div class="col-9">
+        <div id="results"></div>
+        <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <h2 id="product_name"><span id="slug_{{ product.slug }}">{{ product.name }}</span> <small>${{ product.price }}</small></h2>
+                <hr />
+                <div class="row">
+                    <div class="col-4">
+                        {% if image %}
+                            <img src="{{ MEDIA_URL }}{{ image.url }}" class="img-thumbnail" />
+                        {% else %}
+                            <img src="{% static 'images/default.png' %}" class="img-thumbnail" />
+                        {% endif %}
+                        <p class="my-2"><strong>Seller</strong>: {{ product.vendor.business_name }}</p>
+                    </div>
+                    <div class="col-8">
+                        <p id="description">{{ product.description }}</p>
+                        <strong>In Stock</strong>: <p id="stock">{{ product.stock_quantity }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="v-pills-edit" role="tabpanel" aria-labelledby="v-pills-edit-tab">
+                
+                <form class="mb-5" action="/products/{{ product.slug }}/update/" id="product-form" method="post" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <p id="nameerr" class="text-danger"></p>
+                        <label for="{{ product_form.name.id_for_label }}">Name:</label>
+                        {{ product_form.name }}
+                    </div>
+                    <div class="form-group">
+                        <p id="sqerr" class="text-danger"></p>
+                        <label for="{{ product_form.stock_quantity.id_for_label }}">Stock Quantity:</label>
+                        {{ product_form.stock_quantity }}
+                    </div>
+                    <div class="form-group">
+                        <p id="priceerr" class="text-danger"></p>
+                        <label for="{{ product_form.price.id_for_label }}">Price:</label>
+                        {{ product_form.price }}
+                    </div>
+                    <div class="form-group">
+                        <p id="descerr" class="text-danger"></p>
+                        <label for="{{ product_form.description.id_for_label }}">Description:</label>
+                        {{ product_form.description }}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-round">Save</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="v-pills-category" role="tabpanel" aria-labelledby="v-pills-category-tab">
+                <p>Category here!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/products.js' %}"></script>
+{% endblock javascript %}

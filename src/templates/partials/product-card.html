@@ -1,0 +1,30 @@
+<div class="card product-card" style="">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-7">
+                {% for photo in object.album.photos.all %}
+                    {% if photo.default and photo.album.name == object.album.name  %}
+                        <img src="{{ MEDIA_URL }}{{photo.url}}" class="card-img-top" alt="...">
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-md-5">
+                <div class="product">
+                    <p>{{ object.category.name }}</p>
+                    <h1>{{ object.name }}</h1>
+                    <h2>${{ object.price }}</h2>
+                    <p class="desc">{{ object.description|truncatechars:50 }}</p>
+                    {% comment %} { {% endcomment %}
+                    <div class="">
+                        {% if object in current_order_products %}
+                            <a href="{% url 'shopping_cart:order_summary' %}" class="text-center buttons add rounded-pill">Go to Cart</a>
+                        {% else %}
+                            <a href="{% url 'shopping_cart:add_to_cart' object.id %}" class="text-center buttons add rounded-pill">Add to Cart</a>
+                        {% endif %}
+                        <button class="buttons like rounded-circle"><span>♥</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

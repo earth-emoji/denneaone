@@ -1,0 +1,79 @@
+{% load cart_template_tag %}
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark jade-bg">
+    <a class="navbar-brand" href="#">Dennea</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item {% if request.resolver_match.url_name == 'product-list' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'products:product-list' %}">Shop</a>
+            </li>
+            <li class="nav-item {% if request.resolver_match.url_name == 'service-list' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'services:service-list' %}">Service</a>
+            </li>
+            {% if request.user.is_authenticated %}
+                {% comment %} <li class="nav-item {% if request.resolver_match.url_name == 'wall' %}active{% endif %}">
+                    <a class="nav-link" href="#">{{request.user.name}}</a>
+                </li> {% endcomment %}
+                {% if request.user.is_customer %}
+                <li class="nav-item">
+                    <a href="#" data-toggle="popover" data-placement="bottom" data-toggle="popover" title="Shopping Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        {% for order in request.user.customer.orders.all %}
+                            {% if order.is_ordered == False %}
+                                <span class="badge badge-light">
+                                {{ request.user|cart_item_count }}
+                                </span>
+                            {% endif %}
+                        {% endfor %}
+                    </a>
+                    <!-- loaded popover content -->
+                    <div id="popover-content" style="display: none">
+                        <ul class="list-group custom-popover">
+                            {% for order in request.user.customer.orders.all %}
+                                {% if order.is_ordered == False %}
+                                    <li class="list-group-item">
+                                    {% for item in order.items.all %}
+                                        {{ item.product.name }} - {{ item.product.price }}
+                                    {% endfor %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if request.user.is_vendor %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'vendors:dashboard' request.user.vendor.slug %}">Dashboard</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                
+            {% else %}
+                <li class="nav-item {% if request.resolver_match.url_name == 'user_signup' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'user_signup' %}">Signup</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'login' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <div class="input-group my-2">
+                <input type="text" class="form-control" id="nav-search-form" placeholder="Search" aria-label="Search" aria-describedby="nav-search-btn">
+                <div class="input-group-append">
+                    <button class="btn peachy-kreme-bg text-white" type="button" id="nav-search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>

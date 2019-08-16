@@ -1,0 +1,43 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Add a new service</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+            <a href="{% url 'vendors:vendor-products' request.user.vendor.id %}" class="btn btn-sm btn-outline-secondary">List</a>
+            <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Export</button>
+        </div>
+    </div>
+</div>
+
+<form class="mb-5" method="post" novalidate>
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.name.errors }}
+        <label for="{{ form.name.id_for_label }}">Name:</label>
+        {{ form.name }}
+    </div>
+    <div class="form-group">
+        {{ form.photo.errors }}
+        <label for="{{ form.photo.id_for_label }}">Upload a photo:</label>
+        {{ form.photo }}
+    </div>
+    <div class="form-group">
+        {{ form.price.errors }}
+        <label for="{{ form.price.id_for_label }}">Rate:</label>
+        {{ form.price }}
+    </div>
+    <div class="form-group">
+        {{ form.duration_measure.errors }}
+        <label for="{{ form.duration_measure.id_for_label }}">Per:</label>
+        {{ form.duration_measure }}
+    </div>
+    <div class="form-group">
+        {{ form.categories.errors }}
+        <label for="{{ form.categories.id_for_label }}">Categories:</label>
+        {{ form.categories }}
+    </div>
+    <button type="submit" class="btn btn-primary btn-round">Save</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ form.media }}
+    <div class='container my-5'>
+        <h2>Add a new product</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name.errors }}
+                <label for="{{ form.name.id_for_label }}">Name:</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                {{ form.venue.errors }}
+                <label for="{{ form.venue.id_for_label }}">Venue:</label>
+                {{ form.venue }}
+            </div>
+            <div class="form-group">
+                {{ form.details.errors }}
+                <label for="{{ form.details.id_for_label }}">Details:</label>
+                {{ form.details }}
+            </div>
+            <div class="form-group">
+                {{ form.date.errors }}
+                <label for="{{ form.date.id_for_label }}">Date:</label>
+                {{ form.date }}
+            </div>
+            <div class="form-group">
+                {{ form.time.errors }}
+                <label for="{{ form.time.id_for_label }}">Time:</label>
+                {{ form.time }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-round">Save</button>
+        </form>
+    </div>
+{% endblock content %}

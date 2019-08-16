@@ -1,0 +1,41 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 my-5 border-bottom">
+        <h1 class="h2">Add a new product</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="">
+                <a href="{% url 'vendors:vendor-products' request.user.vendor.slug %}" class="btn french-laundry-blue-bg whitish-fg rounded-pill">List</a>
+                <button type="button" class="btn french-laundry-blue-bg whitish-fg rounded-pill" disabled>Export</button>
+            </div>
+        </div>
+    </div>
+
+    <form class="mb-5" method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name.errors }}
+            <label for="{{ form.name.id_for_label }}">Name:</label>
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            {{ form.stock_quantity.errors }}
+            <label for="{{ form.stock_quantity.id_for_label }}">Stock Quantity:</label>
+            {{ form.stock_quantity }}
+        </div>
+        <div class="form-group">
+            {{ form.price.errors }}
+            <label for="{{ form.price.id_for_label }}">Price:</label>
+            {{ form.price }}
+        </div>
+        <div class="form-group">
+            {{ form.description.errors }}
+            <label for="{{ form.description.id_for_label }}">Description:</label>
+            {{ form.description }}
+        </div>
+        <button type="submit" class="btn btn-primary btn-round">Save</button>
+    </form>
+</div>
+
+{% endblock content %}

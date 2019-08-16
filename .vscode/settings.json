@@ -1,0 +1,9 @@
+{
+    "python.pythonPath": ".env/bin/python",
+    "python.jediEnabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django"
+    ],
+    "editor.renderWhitespace": "boundary"
+}

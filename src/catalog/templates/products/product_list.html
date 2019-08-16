@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <h1>Catalog</h1>
+    <hr />
+    <div class="row mt-5">
+    {% for object in object_list %}
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                {% for photo in object.album.photos.all %}
+                    {% if forloop.first %}
+                        <img src="{{ MEDIA_URL }}{{photo.url}}" class="card-img-top" alt="..." />
+                    {% endif %}
+                {% empty %}
+                    <img src="{% static 'images/default.png' %}" class="card-img-top" alt="..." />
+                {% endfor %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ object.name }}</h5>
+                    <p class="card-text">Price: ${{ object.price }}</p>
+                    {% if object in current_order_products %}
+                        <a href="{% url 'shopping_cart:order_summary' %}" class="btn btn-warning">Go to Cart</a>
+                    {% else %}
+                        <a href="{% url 'shopping_cart:add_to_cart' object.id %}" class="btn btn-primary">Add to Cart</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

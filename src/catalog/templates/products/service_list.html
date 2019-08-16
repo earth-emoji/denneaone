@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="py-3">Services</h1>
+    <div class="row">
+    {% for service in services %}
+        <div class="col-sm-4">
+            <div class="card" style="width: 18rem;">
+                {% for photo in object.album.photos.all %}
+                    {% if photo.default and photo.album.name == object.album.name  %}
+                        <img src="{{ MEDIA_URL }}{{photo.url}}" class="card-img-top" alt="...">
+                    {% endif %}
+                {% endfor %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ service.name }}</h5>
+                    <p class="card-text">Rate: ${{ service.price }} {% if service.product_type == 'SERVICE' %} A {{ service.duration_measure }} {% endif %}</p>
+                    <a class="btn btn-primary" href="{% url 'services:reserve' service.id %}">Reserve</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock content %}

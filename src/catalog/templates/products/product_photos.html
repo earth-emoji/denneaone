@@ -1,0 +1,52 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ album.name }}'s Photos</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="">
+                <a href="{% url 'products:edit-product' album.product.slug %}" class="btn navy-bg whitish-fg rounded-pill"><i class="fa fa-info"></i> Details</a>
+                <a href="{% url 'vendors:vendor-products' request.user.vendor.slug %}" class="btn navy-bg text-white rounded-pill"><i class="fas fa-list-ol"></i> Back to list</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-5">
+        <form method="post" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group row">
+              <div class="col-sm-12">
+                <div class="input-group mt-3">
+                    <div class="custom-file">
+                        {{ form.url.errors }}
+                        {{ form.url }}
+                        <label class="custom-file-label text-truncate" for="{{ form.url.id_for_label }}">Choose photo:</label>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary py-0" type="submit" id="inputGroupFileAddon04">Upload</button>
+                    </div>
+                </div>
+                
+              </div>
+            </div>
+            
+        </form>
+    </div>
+    <div class="row">
+        {% for photo in album.photos.all %}
+            <div class="col-4">
+                <img src="{{ MEDIA_URL }}{{ photo.url }}" class="img-fluid img-thumbnail" />
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}
+
+{% block javascript %}
+    <script src="{% static 'libs/bootstrap/js/bs-custom-file-input.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            bsCustomFileInput.init()
+        });
+    </script>
+{% endblock javascript %}

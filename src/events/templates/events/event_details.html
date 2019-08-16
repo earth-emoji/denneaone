@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class='container my-5'>
+        <h1 class='pt-2'>{{ event.name }}</h1>
+        <a href="{% url 'events:user-events' request.user.id %}" class='btn btn-primary btn-block'>My Events</a>
+        <p>{{ event.details|safe }}</p>
+    </div>
+{% endblock content %}

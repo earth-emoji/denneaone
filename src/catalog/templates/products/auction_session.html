@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="py-3">{{ auction.product.name }}</h1>
+
+    <form class="d-none">
+        {% csrf_token %}
+        <input type="hidden" value="{{auction.id}}" id="auction-{{auction.id}}" />
+    </form>
+
+    <div class="row">
+        <div class="col">
+            <h1>Starting Bid {{auction.product.price}}</h1>
+            <h1>Highest Bid
+                {% if auction.highest_bid == auction.product.price %}
+                    0.00
+                {% elif auction.highest_bid > auction.product.price %}
+                    <span id="highest-bid">{{ auction.highest_bid }}</span>
+                {% endif %}
+            </h1>
+        </div>
+        <div class="col">
+            <form id="auction-{{ auction.id }}" method="POST">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="bid" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit" onclick="auctionBid('auction-{{ auction.id }}')">Bid</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script type="text/javascript">
+    (function bidUpdate($) { 
+        setInterval(function(){
+            $.ajax({
+                url: "{% url 'auctions:bid-update' %}",
+                type: "POST",
+                data: {
+                    auction: $("#auction-{{auction.id}}").val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(data) {
+                    // get the highest bid and display it
+                    $('#highest-bid').html(data).fadeIn("slow");
+                }
+            });
+        }, 1000);
+    })(jQuery);
+
+    auctionBid = function(form) { 
+        form_selector = "#" + form;
+        
+        $(document).on('submit', form_selector, function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'auctions:bid' auction.id %}",
+                data: {
+                    bid: $('#bid').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, 
+                success: function(data) {
+                    if (typeof data === 'string' ) {
+                        alert(data);
+                    }
+                    else {
+                        $('#highest-bid').html(data).fadeIn("slow");
+                    }
+                }
+            });
+        });
+    };
+    
+</script>
+{% endblock javascript %}

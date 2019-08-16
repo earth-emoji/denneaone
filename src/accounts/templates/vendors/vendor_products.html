@@ -1,0 +1,35 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Products</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="">
+            <a href="{% url 'products:new-product' %}" class="btn navy-bg whitish-fg rounded-pill"><i class="fa fa-plus"></i> Product</a>
+            <a href="{% url 'services:new-service' %}" class="btn navy-bg whitish-fg rounded-pill"><i class="fa fa-plus"></i> Service</a>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Product Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }} {% if product.product_type == 'SERVICE' %} A {{ product.duration_measure }} {% endif %}</td>
+                    <td>{{ product.product_type }}</td>
+                    <td><a href="{% url 'products:edit-product' product.slug %}">View</a> | Delete</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

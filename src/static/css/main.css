@@ -1,0 +1,232 @@
+@font-face {
+    font-family: quicksand;
+    src: url(../webfonts/quicksand/Quicksand-Regular.otf);
+}
+
+@font-face {
+    font-family: quicksand-light;
+    src: url(../webfonts/quicksand/Quicksand-Light.otf);
+}
+
+body {
+    font-family: quicksand;
+    background-color: #f5f5f5;
+}
+
+.qs-light {
+    font-family: quicksand-light !important;
+}
+
+#nav-search-form, .custom-file {
+    border-top-left-radius: 1rem !important;
+    border-bottom-left-radius: 1rem !important;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#nav-search-btn {
+    border-top-right-radius: 1rem !important;
+    border-bottom-right-radius: 1rem !important;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.parallax {
+    /* The image used */
+    background-image: url(../images/hiker-1149898_1920.jpg);
+  
+    /* Set a specific height */
+    height: 100vh;
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: top 0% center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    color: white;
+}
+
+.color-bg {
+    /* Set a specific height */
+    height: 100vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-position: top 0% center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    padding: 15px;
+    position: relative;
+}
+
+.color-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #3a4660;
+    opacity: 0.6;
+    margin: 0 !important;
+    z-index: 0;
+}
+
+.mid h2 {
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    font-size: 5rem;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    letter-spacing: .5rem;
+}
+
+.mid p {
+    font-weight: 500;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    font-size: .8rem;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    letter-spacing: .5rem;
+}
+
+.mid #login-btn {
+    z-index: 1;
+    top: 70%;
+    position: absolute;
+    right: 51%;
+}
+
+.mid #signup-btn {
+    z-index: 1;
+    top: 70%;
+    position: absolute;
+}
+
+
+.img-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 100%;
+    background-position: top 0% center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    padding: 15px;
+    position: relative;
+}
+
+.block-one {
+    background: url(../images/mountain-2592792_1920.jpg);
+}
+
+.block-two {
+    background: url(../images/woman-2896389_1920.jpg);
+}
+
+.vh-100 {
+    height: 100vh !important;
+}
+
+.vh-75 {
+    height: 75vh !important;
+}
+
+.vh-50 {
+    height: 50vh !important;
+}
+
+.vh-25 {
+    height: 25vh !important;
+}
+
+.txt-block {
+    z-index: 1;
+}
+
+.footer {
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden !important;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    max-width: 100%;
+    font-size: 1rem;
+    /* 20px */
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.525rem 2.25rem;
+    /* 10px 20px */
+    border-radius: 1.2rem;
+}
+
+.no-js .inputfile + label {
+    display: none;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label * {
+    /* pointer-events: none; */
+    /* in case of FastClick lib use */
+}
+
+.inputfile + label svg {
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    /* 4px */
+    margin-right: 0.25em;
+    /* 4px */
+}
+
+
+/* style 1 */
+
+.inputfile-custom + label {
+    color: #f1e5e6;
+    background-color: #3a4660;
+}
+
+.inputfile-custom:focus + label,
+.inputfile-custom.has-focus + label,
+.inputfile-custom + label:hover {
+    background-color: #2E384D;
+}
+
+.french-corners {
+    border-radius: .825rem;
+}
